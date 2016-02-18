@@ -1,10 +1,10 @@
-<h3>Tags</h3>
+<h3 class="blue-grey-text text-darken-1">Tags</h3>
 
 <% tags.forEach(function(tag) { %>
 	<div class="well">
 		<p>
-			<a href="/tags/<%= tag.favoriteId %>">
-				<%= tag.tag %>
+			<a href="/tags/<%= tag.id %>" class="blue-grey-text text-darken-1">
+				#<%= tag.tag %>
 			</a>
 		</p>
 	</div>	

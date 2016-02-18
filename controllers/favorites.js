@@ -34,7 +34,7 @@ router.get("/:imdbID/comments", function(req, res) {
 		include: [db.comment]
 	}).then(function(fav) {
 		// res.send(fav);
-		console.log(fav);
+		// console.log(fav);
 		res.render("favorites/comments", {favorite: fav});
 	});
 });
@@ -43,13 +43,17 @@ router.get("/:imdbID/comments", function(req, res) {
 // Posts a comment to comment page
 router.post("/:imdbID/comments", function(req, res) {
 	var movie = req.params.imdbID;
-	db.comment.create({
-		body: req.body.body,
-		author: req.body.author,
-		favoriteId: req.body.id
-	}).then(function() {
-		res.redirect("/favorites/" + movie + "/comments");
-	});
+		if (req.body.comment) {
+		db.comment.create({
+			body: req.body.body,
+			author: req.body.author,
+			favoriteId: req.body.id
+		}).then(function() {
+			res.redirect("/favorites/" + movie + "/comments");
+		});
+	} else {
+		res.redirect("/error");
+	}
 });
 
 // Add Tag page
@@ -59,7 +63,7 @@ router.get("/:imdbID/tags", function(req, res) {
 		where: {
 			imdbCode: imdbCode
 		},
-		// include: [db.tag]
+		include: [db.tag]
 	}).then(function(fav) {
 		 res.render("tags", {favorite: fav});
 	})
@@ -67,19 +71,34 @@ router.get("/:imdbID/tags", function(req, res) {
 
 // Posts a tag to a movie
 router.post("/:imdbID/tags", function(req, res) {
-	db.tag.findOrCreate({
-		where: {
-			tag: req.body.tag,
-			favoriteId: req.body.id
-		}
-	}).spread(function(tag, created) {
-		console.log(tag);
-		db.omdbFavorite.findById(req.body.id).then(function(favorite) {
-		 	favorite.addTag(tag).then(function() {
-
-			});
-	    });
-	});
+	if (req.body.tag) {
+		db.tag.findOrCreate({
+			where: {
+				tag: req.body.tag
+			}
+		}).spread(function(tag, created) {
+			console.log(tag);
+			db.omdbFavorite.findById(req.body.id).then(function(favorite) {
+			 	favorite.addTag(tag).then(function() {
+			 		res.redirect("..");
+				});
+		    });
+		});
+	} else {
+		res.redirect("/error");
+	}
 });
 
 module.exports = router;	
+
+
+
+
+
+
+
+
+
+
+
+

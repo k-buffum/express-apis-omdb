@@ -1,18 +1,18 @@
-<div class="container">
-	<h1>Favorite Movies</h1>
-		<% favorites.forEach(function(favorite) { %>
-			<div class="well">
-				<h3>
-					<a href="/results/<%= favorite.imdbCode %>">
-						<ul>
-							<li><%= favorite.title %></li>
-							<li><%= favorite.year %></li>
-							<li>IMDB Code: <%= favorite.imdbCode %></li>
-						</ul>
-					</a>
-					<a href="/favorites/<%= favorite.imdbCode %>/comments">Comments</a>
-      				<a href="/favorites/<%= favorite.imdbCode %>/tags">Add a tag</a>
-				</h3>
-			</div>
-		<% }); %>
+<h1 class="blue-grey-text text-darken-1">Favorite Movies</h1>
+<div class="row">
+	<div class="col s12 m6">
+		<div class="card blue-grey darken-1">
+			<% favorites.forEach(function(favorite) { %>
+				<a href="/results/<%= favorite.imdbCode %>">
+					<div class="card-content white-text">
+						<span class="card-title white-text"><%= favorite.title %></span>
+						<p class="white-text"><%= favorite.year %></p>
+						<p class="white-text">IMDB Code: <%= favorite.imdbCode %></p>
+						<a href="/favorites/<%= favorite.imdbCode %>/comments" class="waves-effect waves-light btn cyan accent-1 blue-grey-text text-darken-1">Comments</a>
+						<a href="/favorites/<%= favorite.imdbCode %>/tags" class="waves-effect waves-light btn cyan accent-1 blue-grey-text text-darken-1">Add a tag</a>
+					</div>
+				</a>
+			<% }); %>
+		</div>
+	</div>
 </div>

@@ -1,0 +1,5 @@
+<h1 class="blue-grey-text text-darken-1">#<%= tag.tag %></h1>
+
+<% tag.omdbFavorites.forEach(function(movie) { %>
+	<h3><a href="/results/<%= movie.imdbCode %>" class="blue-grey-text text-darken-1"><%= movie.title %></a></h3>
+<% }) %>

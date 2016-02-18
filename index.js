@@ -28,11 +28,14 @@ app.get("/results", function(req, res) {
 	request( "http://omdbapi.com/?s=" + qs,
 		function (error, response, body) {
 			if(!error && response.statusCode == 200 ) {
+				// console.log(response);
 				movies = JSON.parse(body);
 				console.log(movies);
 				res.render("results.ejs", { movies: movies });
-			} else {
-				res.render("error.ejs")
+			} else if (response === 'False') {
+				console.log(error)
+				res.send(error)
+				//res.redirect("/error");
 			}
 		}
 	);
@@ -52,6 +55,7 @@ app.get("/results/:imdbID", function(req, res) {
 	);
 });
 
+// Displays all tags ever made in data base
 app.get("/tags", function(req, res) {
 	db.tag.findAll().then(function(tags) {
 		// res.send(tags);
@@ -60,15 +64,22 @@ app.get("/tags", function(req, res) {
 	});
 });
 
+
+// Get all movies with related tag and display on a page
 app.get("/tags/:favoriteId", function(req, res) {
 	db.tag.find({
 		where: {
-			favoriteId: req.params.favoriteId
+			id: req.params.favoriteId
 		},
-		include: [db.omdbFavorites]
-	}).then(function() {
-		res.render("favorites/tags.ejs")
+		include: [db.omdbFavorite]
+	}).then(function(tag) {
+		res.render("moviesByTag.ejs", {tag: tag})
 	})
+});
+
+
+app.get("/error", function(req, res) {
+	res.render("error.ejs");
 });
 
 app.listen(3000);

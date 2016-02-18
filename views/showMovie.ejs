@@ -1,25 +1,27 @@
 <div class="container">
-  <div class="card" id="movieImage">
+  <div class="card  blue-grey darken-1" id="movieImage">
     <div class="card-image waves-effect waves-block waves-light">
       <img class="activator" src="<%= movieInfo.Poster%>">
     </div>
     <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><%= movieInfo.Title %><i class="material-icons right">more_vert</i></span>
+      <span class="card-title activator white-text"><%= movieInfo.Title %><i class="material-icons right">more_vert</i></span>
 
       <form method="POST" action="/favorites/<%= movieInfo.imdbID %>">
         <input type="hidden" name="favId" value="<%= movieInfo.imdbID %>">
         <input type="hidden" name="favTitle" value="<%= movieInfo.Title %>">
         <input type="hidden" name="favYear" value="<%= movieInfo.Year %>">
-        <button type="submit">Add to favorites</button>
+        <button class="btn waves-effect waves-light cyan accent-1 blue-grey-text text-darken-1" type="submit" name="action">Add to favorites
+          <i class="material-icons right">send</i>
+        </button>
       </form>
 
-      <a href="/favorites/<%= movieInfo.imdbID %>/comments">Comments</a>
-      <a href="/favorites/<%= movieInfo.imdbID %>/tags">Add a tag</a>
+      <a class="waves-effect waves-light btn cyan accent-1 blue-grey-text text-darken-1" href="/favorites/<%= movieInfo.imdbID %>/comments" style="margin: 5px 5px 0 0">Comments</a>
+      <a class="waves-effect waves-light btn cyan accent-1 blue-grey-text text-darken-1" href="/favorites/<%= movieInfo.imdbID %>/tags" style="margin: 5px 0 0 0">Add a tag</a>
       <br/>
       
     </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+    <div class="card-reveal blue-grey darken-1 white-text">
+      <span class="card-title grey-text text-darken-4"><i class="material-icons right white-text">close</i></span>
       <p>
       	<ul>
           <li>Director: <%= movieInfo.Director %></li>
